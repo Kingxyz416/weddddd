@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Yasir & Riza · Dawat-e-Walima · 22 November 2026</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f4ea;
+      --bg2: #ece5d3;
+      --ink: #3f444d;
+      --muted: #6b707a;
+      --wine: #4b505a;
+      --rose: #4b505a;
+      --gold: #b8923f;
+      --card: #fffdf7;
+      color-scheme: light
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    :root {
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      line-height: 1.6;
+      overflow-x: hidden
+    }
+
+    .script {
+      font-family: 'Great Vibes', 'Brush Script MT', cursive;
+      font-weight: 400
+    }
+
+    h2 {
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-size: .95rem;
+      color: var(--gold)
+    }
+
+    section {
+      padding: 90px 24px;
+      max-width: 760px;
+      margin: auto;
+      text-align: center;
+      position: relative
+    }
+
+    /* envelope intro */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: radial-gradient(circle at 50% 40%, #fbf8ef, #e4dcc6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #3f444d;
+      transition: opacity .7s .3s, visibility 0s 1s
+    }
+
+    #intro.open {
+      opacity: 0;
+      visibility: hidden
+    }
+
+    .env {
+      position: relative;
+      width: min(300px, 78vw);
+      height: 200px;
+      background: #f1ead6;
+      border-radius: 6px;
+      box-shadow: 0 20px 50px #0003;
+      cursor: pointer;
+      animation: float 3s ease-in-out infinite;
+      transition: transform .7s ease, opacity .6s ease
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-10px)
+      }
+    }
+
+    .env .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: #ded4b8;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform .8s;
+      z-index: 3
+    }
+
+    .env .front {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #f1ead6 50%, #ded4b8);
+      clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+      z-index: 2
+    }
+
+    .env .letter {
+      position: absolute;
+      left: 8%;
+      width: 84%;
+      height: 85%;
+      bottom: 6%;
+      background: var(--card);
+      border-radius: 4px;
+      transition: transform .9s .6s;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4b505a;
+      font-size: 2rem
+    }
+
+    .seal {
+      position: absolute;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #4b505a;
+      color: #e0c070;
+      display: grid;
+      place-items: center;
+      z-index: 4;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.3rem;
+      box-shadow: 0 3px 8px #0006;
+      transition: opacity .3s
+    }
+
+    #intro.open .env {
+      animation: none;
+      transform: scale(1.25);
+      opacity: 0
+    }
+
+    #intro p {
+      margin-top: 36px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      font-size: .8rem;
+      opacity: .85;
+      transition: opacity .4s
+    }
+
+    #intro.open p {
+      opacity: 0
+    }
+
+    /* hero */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, var(--bg), var(--bg2))
+    }
+
+    .arabic {
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 24px
+    }
+
+    .names {
+      font-size: clamp(3.4rem, 15vw, 6.5rem);
+      line-height: 1.35;
+      margin-top: 34px;
+      color: var(--wine)
+    }
+
+    .names span {
+      display: block;
+      font-size: .35em;
+      color: var(--gold);
+      margin: 4px 0
+    }
+
+    .sub {
+      margin-top: 22px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      font-size: .9rem;
+      color: var(--muted)
+    }
+
+    .date {
+      margin-top: 14px;
+      font-size: 1.5rem;
+      font-style: italic
+    }
+
+    .scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      width: 1px;
+      height: 46px;
+      background: linear-gradient(var(--gold), transparent);
+      animation: drip 2s infinite
+    }
+
+    @keyframes drip {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top
+      }
+
+      50% {
+        transform: scaleY(1);
+        transform-origin: top
+      }
+
+      51% {
+        transform-origin: bottom
+      }
+
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom
+      }
+    }
+
+    /* reveal */
+    .rv {
+      opacity: 0;
+      transform: translateY(30px) scale(.97);
+      filter: blur(6px);
+      transition: all 1s cubic-bezier(.2, .7, .2, 1)
+    }
+
+    .rv.in {
+      opacity: 1;
+      transform: none;
+      filter: none
+    }
+
+    .divider {
+      width: 120px;
+      height: 1px;
+      background: var(--gold);
+      margin: 26px auto;
+      position: relative
+    }
+
+    .divider::after {
+      content: "✦";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg);
+      color: var(--gold);
+      padding: 0 10px;
+      font-size: .8rem
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+      border-radius: 18px;
+      padding: 34px 24px;
+      box-shadow: 0 10px 40px color-mix(in srgb, var(--wine) 12%, transparent)
+    }
+
+    .big {
+      font-size: 2.8rem;
+      color: var(--wine);
+      margin: 10px 0
+    }
+
+    .pair {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 26px
+    }
+
+    @media(max-width:560px) {
+      .pair {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .pair small {
+      display: block;
+      color: var(--muted);
+      letter-spacing: .08em
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 8px;
+      padding: 12px 26px;
+      border-radius: 40px;
+      border: 1px solid var(--wine);
+      color: var(--wine);
+      text-decoration: none;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: .85rem;
+      transition: .3s
+    }
+
+    .btn.fill,
+    .btn:hover {
+      background: var(--wine);
+      color: var(--bg)
+    }
+
+    .count {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 24px
+    }
+
+    .count div {
+      width: 80px;
+      padding: 14px 0;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent)
+    }
+
+    .count b {
+      display: block;
+      font-size: 2rem;
+      color: var(--wine);
+      font-weight: 600
+    }
+
+    .count span {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 10px
+    }
+
+    footer {
+      padding: 70px 24px 90px;
+      text-align: center;
+      color: var(--muted)
+    }
+
+    footer .script {
+      font-size: 3rem;
+      color: var(--wine)
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+
+      .rv {
+        opacity: 1;
+        transform: none;
+        filter: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="intro">
+    <div class="env" id="env">
+      <div class="letter script">Y &amp; R</div>
+      <div class="front"></div>
+      <div class="flap"></div>
+      <div class="seal">YR</div>
+    </div>
+    <p>Tap to open</p>
+  </div>
+
+  <section class="hero">
+    <div class="arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+    <div class="sub">Dawat-e-Walima of</div>
+    <h1 class="names script">Yasir<span>weds</span>Riza</h1>
+    <div class="date">Sunday · 22 November 2026</div>
+    <div class="sub">Dinner · 6:30 PM</div>
+    <div class="scroll"></div>
+  </section>
+
+  <section>
+    <div class="rv">
+      <h2>With the blessings of Allah</h2>
+      <div class="divider"></div>
+      <p>Oh Allah, guide this marriage to the best of understanding, happiness, prosperity and success. Ameen.</p>
+      <p style="margin-top:22px">Mrs. &amp; Mr. <b>Manzar Husain</b> sincerely request your esteemed presence on the
+        auspicious occasion of the Reception Ceremony of their loving son</p>
+      <div class="big script">Yasir Husain</div>
+      <div style="color:var(--gold)">— weds —</div>
+      <div class="big script">Riza Abid</div>
+      <p style="color:var(--muted)">D/o Mrs. &amp; Mr. Suhail Abid, Chandpur, Distt. Bijnor</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card rv">
+      <h2>Programme</h2>
+      <div class="big script">Dawat-e-Walima</div>
+      <p style="font-size:1.4rem">Sunday, 22nd November 2026</p>
+      <p style="font-size:1.4rem">Dinner · 6:30 PM</p>
+      <div class="divider"></div>
+      <h2>Venue</h2>
+      <div class="big script" style="font-size:2.4rem">Pari Garden</div>
+      <p>Hukumatpur Road, Noorpur (Bijnor)</p>
+      <a class="btn fill"
+        href="https://www.google.com/maps/search/?api=1&query=Pari+Garden+Hukumatpur+Road+Noorpur+Bijnor"
+        target="_blank" rel="noopener">Open in Maps</a>
+      <a class="btn"
+        href="https://www.google.com/maps/dir/?api=1&destination=Pari+Garden+Hukumatpur+Road+Noorpur+Bijnor"
+        target="_blank" rel="noopener">Directions</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="pair rv">
+      <div class="card">
+        <h2>R.S.V.P.</h2>
+        <div class="list"><span>Qamar Husain</span><span>Ather Husain</span><span>Yawar Husain</span></div>
+      </div>
+      <div class="card">
+        <h2>W.B.C.F.</h2>
+        <div class="list"><span>Mazahar Husain</span><span>Mohd. Jamshed</span><span>Saleem Ahmad</span><span>Shahrukh
+            Razi</span><span>Mohd. Anas</span><span>All Relatives &amp; Friends</span></div>
+      </div>
+    </div>
+    <div class="rv" style="margin-top:34px">
+      <p style="color:var(--muted)">A cordial invitation from</p>
+      <p><b>Manzar Husain</b><br>108, Mohalla Mohammad Nagar, Near Police Station, Noorpur (Bijnor)</p>
+      <a class="btn" href="tel:+919719461447">9719461447</a><a class="btn" href="tel:+919891188772">9891188772</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="arabic" style="font-size:1.3rem">بَارَكَ ٱللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا</div>
+    <p>Your presence and duas are the most precious gift.</p>
+    <div class="script">Yasir &amp; Riza</div>
+  </footer>
+
+  <script>
+    const intro = document.getElementById('intro');
+    document.body.style.overflow = 'hidden';
+    function openIt() { intro.classList.add('open'); setTimeout(() => { document.body.style.overflow = '' }, 1500) }
+    document.getElementById('env').addEventListener('click', openIt);
+    intro.addEventListener('click', openIt);
+    const io = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target) } }), { threshold: .15 });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  </script>
+</body>
+
+</html>
