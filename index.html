@@ -404,6 +404,60 @@
         filter: none
       }
     }
+
+    /* music toggle */
+    .music-toggle {
+      position: fixed;
+      top: max(20px, calc(14px + env(safe-area-inset-top, 0px)));
+      right: max(20px, calc(14px + env(safe-area-inset-right, 0px)));
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+      color: var(--wine);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 40;
+      box-shadow: 0 4px 15px color-mix(in srgb, var(--wine) 15%, transparent);
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 0;
+    }
+
+    .music-toggle:hover {
+      transform: scale(1.08);
+      border-color: var(--gold);
+    }
+
+    .music-toggle .music-icon-play {
+      display: none;
+    }
+
+    .music-toggle .music-icon-pause {
+      display: block;
+    }
+
+    .music-toggle.playing .music-icon-play {
+      display: block;
+      animation: spinMusic 4s linear infinite;
+    }
+
+    .music-toggle.playing .music-icon-pause {
+      display: none;
+    }
+
+    @keyframes spinMusic {
+      0% {
+        transform: rotate(0deg)
+      }
+      100% {
+        transform: rotate(360deg)
+      }
+    }
   </style>
 </head>
 
@@ -485,12 +539,62 @@
     <div class="script">Yasir &amp; Riza</div>
   </footer>
 
+  <!-- Background Music Audio & Floating Toggle -->
+  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+  <button id="musicToggle" class="music-toggle" aria-label="Toggle background music" title="Toggle background music">
+    <svg class="music-icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+    <svg class="music-icon-pause" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+      <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73l4.27 4.27c-.16.03-.31.06-.48.06-2.21 0-4-1.79-4-4 0-.17.03-.32.06-.48L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2V7z"/>
+    </svg>
+  </button>
+
   <script>
     const intro = document.getElementById('intro');
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    let musicStarted = false;
+
+    function playMusic() {
+      if (!musicStarted || bgMusic.paused) {
+        bgMusic.play().then(() => {
+          musicStarted = true;
+          musicToggle.classList.add('playing');
+        }).catch(err => {
+          console.warn('Autoplay prevented:', err);
+        });
+      }
+    }
+
+    function toggleMusic(e) {
+      if (e) e.stopPropagation();
+      if (bgMusic.paused) {
+        playMusic();
+      } else {
+        bgMusic.pause();
+        musicToggle.classList.remove('playing');
+      }
+    }
+
+    musicToggle.addEventListener('click', toggleMusic);
+
     document.body.style.overflow = 'hidden';
-    function openIt() { intro.classList.add('open'); setTimeout(() => { document.body.style.overflow = '' }, 1500) }
+    function openIt() {
+      intro.classList.add('open');
+      setTimeout(() => { document.body.style.overflow = '' }, 1500);
+      playMusic();
+    }
     document.getElementById('env').addEventListener('click', openIt);
     intro.addEventListener('click', openIt);
+
+    // Fallback: any user interaction starts music once invitation is opened
+    document.addEventListener('click', () => {
+      if (intro.classList.contains('open') && bgMusic.paused && !musicStarted) {
+        playMusic();
+      }
+    }, { once: true });
+
     const io = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target) } }), { threshold: .15 });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
   </script>
