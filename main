@@ -202,7 +202,7 @@
       font-size: clamp(3.4rem, 15vw, 6.5rem);
       line-height: 1.35;
       margin-top: 34px;
-      color: var(--wine)
+      color: #6b1f2e
     }
 
     .names span {
