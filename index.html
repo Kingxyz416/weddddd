@@ -69,7 +69,7 @@
       position: relative
     }
 
-    /* envelope intro */
+    /* gate intro */
     #intro {
       position: fixed;
       inset: 0;
@@ -80,97 +80,148 @@
       align-items: center;
       justify-content: center;
       color: #3f444d;
-      transition: opacity .7s .3s, visibility 0s 1s
+      cursor: pointer;
+      transition: opacity .8s 1.5s, visibility 0s 2.3s
     }
 
     #intro.open {
       opacity: 0;
-      visibility: hidden
+      visibility: hidden;
+      pointer-events: none
     }
 
-    .env {
+    .gate {
       position: relative;
-      width: min(300px, 78vw);
-      height: 200px;
-      background: #f1ead6;
-      border-radius: 6px;
-      box-shadow: 0 20px 50px #0003;
-      cursor: pointer;
-      animation: float 3s ease-in-out infinite;
-      transition: transform .7s ease, opacity .6s ease
+      width: min(300px, 76vw);
+      height: min(460px, 60svh);
+      border-radius: 999px 999px 4px 4px;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 9px #f8f4ea, 0 0 0 11px var(--gold), 0 30px 60px #0003;
+      overflow: hidden;
+      perspective: 1400px;
+      transform-origin: 50% 62%;
+      background: radial-gradient(ellipse at 50% 65%, #fff8e1 0%, #ecd9a0 60%, #d9bf7a 100%)
     }
 
-    @keyframes float {
-      50% {
-        transform: translateY(-10px)
-      }
-    }
-
-    .env .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background: #ded4b8;
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      transform-origin: top;
-      transition: transform .8s;
-      z-index: 3
-    }
-
-    .env .front {
+    .gate .glow {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #f1ead6 50%, #ded4b8);
-      clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
-      z-index: 2
-    }
-
-    .env .letter {
-      position: absolute;
-      left: 8%;
-      width: 84%;
-      height: 85%;
-      bottom: 6%;
-      background: var(--card);
-      border-radius: 4px;
-      transition: transform .9s .6s;
-      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #4b505a;
-      font-size: 2rem
+      font-size: 3.2rem;
+      color: #4b505a
     }
 
-    .seal {
+    .leaf {
       position: absolute;
-      top: 88px;
+      top: 0;
+      width: 50.5%;
+      height: 100%;
+      background:
+        linear-gradient(45deg, transparent 47%, rgba(224, 192, 112, .35) 48.5%, rgba(224, 192, 112, .35) 51.5%, transparent 53%),
+        linear-gradient(-45deg, transparent 47%, rgba(224, 192, 112, .35) 48.5%, rgba(224, 192, 112, .35) 51.5%, transparent 53%),
+        #4b505a;
+      background-size: 30px 30px;
+      transition: transform 1.5s cubic-bezier(.6, 0, .2, 1);
+      backface-visibility: hidden
+    }
+
+    .leaf::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(224, 192, 112, .7)
+    }
+
+    .leaf.l {
+      left: 0;
+      transform-origin: left center
+    }
+
+    .leaf.r {
+      right: 0;
+      transform-origin: right center
+    }
+
+    .leaf.l::after {
+      border-right: 0;
+      border-top-left-radius: 999px
+    }
+
+    .leaf.r::after {
+      border-left: 0;
+      border-top-right-radius: 999px
+    }
+
+    .leaf.l::before,
+    .leaf.r::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40%;
+      pointer-events: none;
+      z-index: 1
+    }
+
+    .leaf.l::before {
+      right: 0;
+      background: linear-gradient(90deg, transparent, #0000004d)
+    }
+
+    .leaf.r::before {
+      left: 0;
+      background: linear-gradient(-90deg, transparent, #0000004d)
+    }
+
+    .medal {
+      position: absolute;
       left: 50%;
-      transform: translateX(-50%);
-      width: 46px;
-      height: 46px;
+      top: 58%;
+      width: 64px;
+      height: 64px;
+      margin: -32px 0 0 -32px;
       border-radius: 50%;
-      background: #4b505a;
-      color: #e0c070;
+      background: radial-gradient(circle at 35% 30%, #f0d78e, #b8923f);
+      color: #3f444d;
       display: grid;
       place-items: center;
-      z-index: 4;
       font-family: 'Great Vibes', cursive;
-      font-size: 1.3rem;
-      box-shadow: 0 3px 8px #0006;
-      transition: opacity .3s
+      font-size: 1.6rem;
+      box-shadow: 0 0 0 4px #4b505a, 0 0 0 5px #e0c070, 0 6px 14px #0006;
+      animation: pulse 2.4s ease-in-out infinite;
+      transition: transform .5s, opacity .5s;
+      z-index: 5
     }
 
-    #intro.open .env {
+    @keyframes pulse {
+      50% {
+        transform: scale(1.08)
+      }
+    }
+
+    #intro.open .medal {
       animation: none;
-      transform: scale(1.25);
+      transform: scale(.4);
       opacity: 0
     }
 
+    #intro.open .leaf.l {
+      transform: rotateY(-108deg)
+    }
+
+    #intro.open .leaf.r {
+      transform: rotateY(108deg)
+    }
+
+    #intro.open .gate {
+      transform: scale(9);
+      transition: transform 1.2s 1s cubic-bezier(.7, 0, .9, .5)
+    }
+
     #intro p {
-      margin-top: 36px;
+      margin-top: 44px;
       letter-spacing: .25em;
       text-transform: uppercase;
       font-size: .8rem;
@@ -182,14 +233,106 @@
       opacity: 0
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .medal {
+        animation: none
+      }
+
+      .leaf,
+      #intro.open .gate {
+        transition-duration: .01s
+      }
+
+      #intro {
+        transition: opacity .4s, visibility 0s .4s
+      }
+    }
+
     /* hero */
     .hero {
       min-height: 100svh;
+      max-width: none;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(180deg, var(--bg), var(--bg2))
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 35%, #fffaf0 0%, var(--bg) 45%, var(--bg2) 100%)
+    }
+
+    /* geometric star lattice, fades out toward the centre */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80' fill='none' stroke='%23b8923f' stroke-width='1'%3E%3Crect x='20' y='20' width='40' height='40'/%3E%3Crect x='20' y='20' width='40' height='40' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3Cpath d='M0 0L12 12M80 0L68 12M0 80L12 68M80 80L68 68'/%3E%3C/svg%3E");
+      background-size: 80px 80px;
+      background-position: center;
+      opacity: .4;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 45%, transparent 30%, #000 85%);
+      mask-image: radial-gradient(ellipse at 50% 45%, transparent 30%, #000 85%)
+    }
+
+    /* glowing arch the names sit inside */
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      top: 5svh;
+      bottom: 0;
+      width: min(560px, 92vw);
+      transform: translateX(-50%);
+      border: 2px solid var(--gold);
+      border-bottom: 0;
+      border-radius: 999px 999px 0 0;
+      outline: 1px solid color-mix(in srgb, var(--gold) 70%, transparent);
+      outline-offset: -12px;
+      background: radial-gradient(ellipse at 50% 38%, #ffffffe6, #fffdf7a6 55%, #fffdf700 100%);
+      box-shadow: 0 0 80px #e8cf8a66;
+      -webkit-mask-image: linear-gradient(#000 78%, transparent);
+      mask-image: linear-gradient(#000 78%, transparent)
+    }
+
+    .hero>*:not(.dust):not(.scroll) {
+      position: relative;
+      z-index: 1
+    }
+
+    .dust {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none
+    }
+
+    .dust i {
+      position: absolute;
+      color: var(--gold);
+      font-style: normal;
+      opacity: 0;
+      animation: twinkle 5s ease-in-out infinite
+    }
+
+    @keyframes twinkle {
+      0% {
+        opacity: 0;
+        transform: translateY(8px) scale(.6)
+      }
+
+      50% {
+        opacity: .9;
+        transform: translateY(-6px) scale(1)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(.6)
+      }
     }
 
     .arabic {
@@ -198,18 +341,41 @@
       margin-bottom: 24px
     }
 
+    .hero .arabic {
+      font-size: 2rem;
+      color: #a47a22;
+      text-shadow: 0 1px 0 #fff, 0 0 18px #ffe9a8
+    }
+
     .names {
-      font-size: clamp(3.4rem, 15vw, 6.5rem);
-      line-height: 1.35;
-      margin-top: 34px;
-      color: #6b1f2e
+      font-size: clamp(4rem, 17vw, 7.5rem);
+      line-height: 1.3;
+      margin-top: 30px;
+      color: #5e1426;
+      text-shadow: 0 1px 0 #fff, 0 2px 0 #b8923f80, 0 12px 28px #5e142640, 0 0 46px #ffe9a8cc
     }
 
     .names span {
-      display: block;
-      font-size: .35em;
-      color: var(--gold);
-      margin: 4px 0
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-size: .38em;
+      color: #a47a22;
+      margin: 2px 0;
+      text-shadow: 0 1px 0 #fff
+    }
+
+    .names span::before,
+    .names span::after {
+      content: "";
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold))
+    }
+
+    .names span::after {
+      transform: scaleX(-1)
     }
 
     .sub {
@@ -217,13 +383,20 @@
       letter-spacing: .3em;
       text-transform: uppercase;
       font-size: .9rem;
-      color: var(--muted)
+      font-weight: 600;
+      color: #4b505a
     }
 
     .date {
-      margin-top: 14px;
-      font-size: 1.5rem;
-      font-style: italic
+      margin-top: 18px;
+      padding: 8px 22px;
+      white-space: nowrap;
+      font-size: clamp(1.1rem, 5vw, 1.6rem);
+      font-weight: 600;
+      font-style: italic;
+      color: #3f444d;
+      border-top: 1px solid var(--gold);
+      border-bottom: 1px solid var(--gold)
     }
 
     .scroll {
@@ -463,11 +636,11 @@
 
 <body>
   <div id="intro">
-    <div class="env" id="env">
-      <div class="letter script">Y &amp; R</div>
-      <div class="front"></div>
-      <div class="flap"></div>
-      <div class="seal">YR</div>
+    <div class="gate" id="gate">
+      <div class="glow script">Y &amp; R</div>
+      <div class="leaf l"></div>
+      <div class="leaf r"></div>
+      <div class="medal">YR</div>
     </div>
     <p>Tap to open</p>
   </div>
@@ -478,6 +651,7 @@
     <h1 class="names script">Yasir<span>weds</span>Riza</h1>
     <div class="date">Sunday · 22 November 2026</div>
     <div class="sub">Dinner · 6:30 PM</div>
+    <div class="dust" id="dust"></div>
     <div class="scroll"></div>
   </section>
 
@@ -582,10 +756,9 @@
     document.body.style.overflow = 'hidden';
     function openIt() {
       intro.classList.add('open');
-      setTimeout(() => { document.body.style.overflow = '' }, 1500);
+      setTimeout(() => { document.body.style.overflow = '' }, 2200);
       playMusic();
     }
-    document.getElementById('env').addEventListener('click', openIt);
     intro.addEventListener('click', openIt);
 
     // Fallback: any user interaction starts music once invitation is opened
@@ -594,6 +767,21 @@
         playMusic();
       }
     }, { once: true });
+
+    // drifting gold sparkles in the hero
+    (function () {
+      const d = document.getElementById('dust');
+      for (let i = 0; i < 18; i++) {
+        const e = document.createElement('i');
+        e.textContent = '✦';
+        e.style.left = (Math.random() * 100) + '%';
+        e.style.top = (8 + Math.random() * 80) + '%';
+        e.style.fontSize = (8 + Math.random() * 10) + 'px';
+        e.style.animationDelay = (Math.random() * 5) + 's';
+        e.style.animationDuration = (4 + Math.random() * 3) + 's';
+        d.appendChild(e);
+      }
+    })();
 
     const io = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target) } }), { threshold: .15 });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
